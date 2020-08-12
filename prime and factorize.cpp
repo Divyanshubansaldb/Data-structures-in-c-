@@ -1,3 +1,5 @@
+// a number bigger than 1e9 and is a prime number is 1777777777
+
 bool isPrime(int n) 
 {
     if (n <= 1)  return false; 
