@@ -50,3 +50,33 @@ struct FenwickTree {
         }
     }
 };
+
+
+////////////
+//Normal fenwick tree operations;
+////////////
+// keep in mind that 0&-0 = 0; so do not put start with 0 as a index otherwise it will
+// stuck in infinite loop;
+
+const int maxn=1e5+5;
+vector<int> bit(maxn,0);
+
+void update(int i,int val)
+{
+    i++;
+    while(i<maxn){
+        bit[i]+=val;
+        i+=i&-i;
+    }
+}
+
+int query(int i)
+{
+    i++;
+    int sum=0;
+    while(i){
+        sum+=bit[i];
+        i-=i&-i;
+    }
+    return sum;
+}

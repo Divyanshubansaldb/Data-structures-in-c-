@@ -2,7 +2,7 @@
 // CPP code for illustration 
 // of stoll() function. 
 #include <bits/stdc++.h> 
-using namespace std; 
+using namespace std;
   
 int main() 
 { 
@@ -21,7 +21,10 @@ int main()
     // converting binary number. 
     string binary_num = "1111111"; 
     cout << "binary_num = " << 
-    stoll(binary_num, nullptr, 2) << "\n"; 
+    stoll(binary_num, nullptr, 2) << "\n";
   
         return 0; 
 }
+
+
+// to convert from number to string use to_string() function
