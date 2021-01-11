@@ -26,7 +26,7 @@ void solve()
 int main()
 {
     IOS;
-    ll t=1; cin>>t;
+    int t=1; cin>>t;
     while (t--)
     {
         solve();
