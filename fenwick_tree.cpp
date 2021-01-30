@@ -5,8 +5,8 @@
 // 0 0 0 0 0 0 0 0 are initial values and you want to update them so that you have value 5 in the range [3,6]
 // 0 0 5 5 5 5 0 0 so to make this you have to make the following queries:-update(3(index from where start),5)
 // update(7(the ending position + 1), -5(negative of the value you want to add));
-update(3,5);
-update(7,-5);
+// update(3,5);
+// update(7,-5);
 ////////
 ////////
 struct FenwickTree {
@@ -41,7 +41,7 @@ struct FenwickTree {
         return sum(r) - sum(l - 1);
     }
 
-    void update(int idx, int delta) 
+    void update(int idx, int delta)
     {
         while(idx<n)
         {
