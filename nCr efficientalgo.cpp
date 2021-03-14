@@ -90,3 +90,6 @@ int main()
     compute(MOD);
  	cout << C(100000,100,MOD) << endl;
 }
+
+// you can also use the property of (n,r) = (n-1,r) + (n-1,r-1); where (n,r) == nCr;
+// using dynamic programming you can store the values and then calculate using recursion
