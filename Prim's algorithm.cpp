@@ -1,74 +1,108 @@
-//Name - Divyanshu Bansal
-//Roll number - 18UCC051
-//Prim's Algorithm
-
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long int
+#define ld long double
+#define LL_MAX LLONG_MAX
+#define ULL_MAX ULLONG_MAX
+#define ull unsigned long long
+#define IOS ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+#define pb(x) push_back(x)
+#define re() pop_back()
+#define eb(x) emplace_back(x)
+#define forn(i, n) for (int i = 0; i < int(n); ++i)
+#define fore(i, l, r) for (int i = int(l); i < int(r); ++i)
+#define all(a) a.begin(),a.end()
+#define msort(a) sort(a.begin(),a.end())
+#define pii pair<int,int>
+#define sz(x) int(x.size())
+#define mk make_pair
+#define endl '\n'
+#define LOCAL
+#ifdef LOCAL
+    #define deb(x) cout<<#x<<" "<<x<<" ";
+    #define debendl(x) cout<<#x<<" "<<x<<endl;
+#else
+    #define deb(...) 1
+    #define debendl(...) 1
+#endif
 
-class edge
-{
-public:
-    int u, v, weight;
+const int maxn = 1005;
+vector<int> cost(maxn,INT_MAX);
+
+struct sortingset{
+    bool operator()(int a, int b) const{
+        return make_pair(cost[a],a) < make_pair(cost[b],b);
+    }
 };
+
+class Solution
+{
+	public:
+    
+    int spanningTree(int v, vector<vector<int>> adj[])
+    {
+        fill(cost.begin(),cost.end(),INT_MAX);
+        int finalcost = 0;
+        vector<int> parent(v,-1);
+         
+        set<int, sortingset> s;
+        
+        cost[0] = 0;
+        s.insert(0);
+        
+        for(int i=1;i<v;i++){
+            s.insert(i);
+        }
+        
+        for(int it: s) cout<<it<<" ";
+        cout<<endl;
+        while(!s.empty()){
+            int node = *s.begin();
+            s.erase(node);
+            
+            finalcost+=cost[node];
+            for(auto it: adj[node]){
+                int child = it[0], weight = it[1];
+                if(s.count(child) && cost[child]>weight){
+                    s.erase(child);
+                    parent[child] = node;
+                    cost[child] = weight;
+                    s.insert(child);
+                }
+            }
+        }
+        
+        return finalcost;
+    }
+};
+
+void solve()
+{
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>> adj[n];
+    
+    for (int i = 0; i < n; i++)
+    {
+        int u,v,w;
+        cin>>u>>v>>w;
+        vector<int> temp = {v,w};
+        adj[u].push_back(temp);
+        temp = {u,w};
+        adj[v].push_back(temp);
+    }
+    
+    Solution obj;
+    cout<<obj.spanningTree(n,adj)<<endl;
+
+}
 
 int main()
 {
-    int n;
-    cout << "Input the number of Vertices" << endl;
-    cin >> n;
-    vector<vector<pair<int, int>>> graph(n + 1);
-    vector<pair<int, int>> parent(n + 1, {INT_MAX, INT_MAX});
-    vector<edge> mst;
-    int ans = 0;
-
-    int m;
-    cout << "Input the number of edges" << endl;
-    cin >> m;
-    cout << "Input the edge in the format=> u v weight" << endl;
-    for (int i = 0; i < m; i++)
+    IOS;
+    int t=1; //cin>>t;
+    while (t--)
     {
-        int x, y, w;
-        cin >> x >> y >> w;
-        graph[x].push_back({y, w});
-        graph[y].push_back({x, w});
-    }
-
-    set<pair<int, int>> q;
-    q.insert({0, 1});
-    vector<int> visited(n + 1, 0);
-    while (!q.empty())
-    {
-        pair<int, int> p = *q.begin();
-        q.erase(q.begin());
-        visited[p.second] = 1;
-        if (p.second != 1)
-        {
-            ans += p.first;
-            edge e;
-            e.u = parent[p.second].second;
-            e.v = p.second;
-            e.weight = p.first;
-            mst.push_back(e);
-        }
-
-        for (auto it : graph[p.second])
-        {
-            if (visited[it.first])
-                continue;
-            if (parent[it.first].first > it.second)
-            {
-                q.erase({parent[it.first].first, it.first});
-                parent[it.first] = {it.second, p.second};
-                q.insert({parent[it.first].first, it.first});
-            }
-        }
-    }
-
-    cout << "Details for the Minimum Spanning Tree of the graph is:-" << endl;
-    cout << "Weight of the tree:- " << ans << endl;
-    cout << "Edges included in the tree:-" << endl;
-    for (auto it : mst)
-    {
-        cout << it.u << "-" << it.v << "\t Weight-" << it.weight << endl;
+        solve();
     }
 }
