@@ -69,6 +69,12 @@ ll pow(ll val, ll exp, ll MOD)
     }
     return x;
 }
+
+ll mul(ll x, ll y, ll MOD)
+{
+    return (x * y) % MOD;
+}
+
 ll InverseEuler(ll n, ll MOD)
 {
     return pow(n,MOD-2,MOD);
