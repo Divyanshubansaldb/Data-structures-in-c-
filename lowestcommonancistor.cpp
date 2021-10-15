@@ -1,17 +1,18 @@
-int n;
-int D=floor(log2(n));
+const ll maxn = 8e5+5;
+ll D =floor(log2(maxn));
+ll n;
 
-vector<vector<int>> table(n+1, vector<int> (D+1,-1));
-vector<int> depth(n+1,0);
-vector<int> visited(n+1,0);
-vector<vector<int>> graph(n+1);
-void bfs(int x=1)
+vector<vector<ll>> table(maxn, vector<ll> (D+1,-1));
+vector<ll> depth(maxn,0);
+vector<ll> visited(maxn,0);
+vector<vector<ll>> graph(maxn);
+void bfs(ll x=1)
 {
-    queue<int> q;
+    queue<ll> q;
     q.push(x);
     while(!q.empty())
     {
-        int temp=q.front();
+        ll temp=q.front();
         q.pop();
         visited[temp]=1;
         for (auto &&i : graph[temp])
@@ -27,20 +28,20 @@ void bfs(int x=1)
 
 void makingtable()
 {
-    for (int i = 1; i <= D; i++)
+    for (ll i = 1; i <= D; i++)
     {
-        for (int j = 1; j < n+1; j++)
+        for (ll j = 1; j < n+1; j++)
         {
-            int mid=table[j][i-1];
+            ll mid=table[j][i-1];
             if(mid!=-1)
                 table[j][i]=table[mid][i-1];
         }
     }
 }
 
-int walk(int j,int k)
+ll walk(ll j,ll k)
 {
-    for (int i = 0; i <= D && j!=-1; i++)
+    for (ll i = 0; i <= D && j!=-1; i++)
     {
         if((1<<i & k) >0)
         {
@@ -50,7 +51,7 @@ int walk(int j,int k)
     return j;
 }
 
-int lca(int u,int v)
+ll lca(ll u,ll v)
 {
     if(depth[u]>depth[v])
     {
@@ -64,7 +65,7 @@ int lca(int u,int v)
     if(u==v)
         return u;
     
-    for (int i = D; i >= 0; i--)
+    for (ll i = D; i >= 0; i--)
     {
         if(table[u][i]!=table[v][i])
         {
@@ -76,11 +77,26 @@ int lca(int u,int v)
     return table[u][0];
 }
 
-int distance(int u,int v)
+ll distance(ll u,ll v)
 {
     return depth[u]+depth[v]-2*depth[lca(u,v)];
 }
 
+void solve()
+{
+    cin>>n;
+
+    for(int i=0;i<=n;i++){
+        table[i][0] = 0;
+        depth[i] = 0;
+        visited[i] = 0;
+        graph[i].clear();
+    }
+
+    bfs();
+    makingtable();
+
+}
 
 // use range minimum queries for finding lca
 // use the concept of euler walk 
