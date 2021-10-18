@@ -1,5 +1,4 @@
 vector<int> parent(n+1,0);
-vector<int> rank(n+1,0);
 vector<int> size(n+1,0);
 
 int find_set(int v) {
